@@ -80,9 +80,6 @@ class Sump():
         handle = lt.add_magnet_uri(self.session, magnet_url, self.params)
         return hashify(handle.info_hash().to_string())
 
-    def torrent_path(self, torrent):
-        return torrent.save_path() + torrent.name()
-
     def start_download(self, key):
         entry = self.data[key]
         url = entry['link']
@@ -124,7 +121,7 @@ class Sump():
         move_all_files(DIRS['tv'], FINAL_DIRS['tv'])
 
     def organise_file(self, name, media_type):
-        original_path = self.params['save_path'] + name
+        original_path = os.path.join(self.params['save_path'], name)
         new_path = DIRS[media_type]
         move_file(original_path, new_path)
 
