@@ -113,8 +113,8 @@ class Sump():
         self.move_renamed()
 
     def rename_files(self):
-        os.system('filebot -rename -r %s -non-strict' % DIRS['movie'])
-        os.system('filebot -rename -r --format "{n}/Season {s}/{s00e00} - {t}" %s -non-strict' % DIRS['tv'])
+        os.system('filebot -rename -r --format "../{movie}/{movie}" %s -non-strict' % DIRS['movie'])
+        os.system('filebot -rename -r --format "../{n}/Season {s}/{s00e00} - {t}" %s -non-strict' % DIRS['tv'])
 
     def move_renamed(self):
         move_all_files(DIRS['movie'], FINAL_DIRS['movie'])
