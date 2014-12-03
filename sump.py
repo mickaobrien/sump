@@ -32,7 +32,7 @@ class Sump():
             if self.downloading():
                 sys.stdout.write('\r%s' % ', '.join(self.downloading()))
                 sys.stdout.flush()
-            time.sleep(5)
+            time.sleep(2)
             self.set_data()
             self.add_torrents(self.unstarted)
             if self.downloaded():
