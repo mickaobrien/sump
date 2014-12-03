@@ -11,9 +11,11 @@ from settings import BASE_URL, SAVE_PATH, DIRS, FINAL_DIRS
 
 class Sump():
     def __init__(self):
+        print 'Connect to Firebase...'
         self.db = firebase.Firebase(BASE_URL)
         self.db.uniquify()
         self.set_data()
+        print 'Create session...'
         self.create_session()
         self.params = {
                 'save_path': SAVE_PATH,
@@ -53,7 +55,7 @@ class Sump():
 
     def create_session(self):
         session = lt.session()
-        session.start_dht()
+        #session.start_dht()
         self.session = session
         
     def get_undownloaded(self):
