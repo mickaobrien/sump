@@ -39,9 +39,12 @@ class Sump():
                 self.remove_completed()
 
     def set_data(self):
-        self.data = self.db.data()
-        self.undownloaded = self.get_undownloaded()
-        self.unstarted = self.get_unstarted()
+        try:
+            self.data = self.db.data()
+            self.undownloaded = self.get_undownloaded()
+            self.unstarted = self.get_unstarted()
+        except:
+            pass
 
     def downloading(self):
         torrents = self.session.get_torrents()
