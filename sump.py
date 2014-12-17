@@ -59,6 +59,7 @@ class Sump():
     def create_session(self):
         session = lt.session()
         session.start_dht()
+        session.listen_on(6881, 6891)
         self.session = session
         
     def get_undownloaded(self):
