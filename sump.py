@@ -83,7 +83,11 @@ class Sump():
             self.start_download(key)
 
     def add_torrent(self, magnet_url, torrent_type):
-        handle = lt.add_magnet_uri(self.session, magnet_url, self.params)
+        #handle = lt.add_magnet_uri(self.session, magnet_url, self.params)
+        params = self.params
+        params['url'] = magnet_url
+        handle = self.session.add_torrent(params)
+        print magnet_url
         return hashify(handle.info_hash().to_string())
 
     def start_download(self, key):
