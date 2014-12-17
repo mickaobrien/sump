@@ -58,7 +58,7 @@ class Sump():
 
     def create_session(self):
         session = lt.session()
-        #session.start_dht()
+        session.start_dht()
         self.session = session
         
     def get_undownloaded(self):
