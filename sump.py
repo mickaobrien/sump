@@ -87,7 +87,8 @@ class Sump():
         params = self.params
         params['url'] = magnet_url
         handle = self.session.add_torrent(params)
-        print magnet_url
+        while (not handle.has_metadata()):
+            time.sleep(1)
         return hashify(handle.info_hash().to_string())
 
     def start_download(self, key):
