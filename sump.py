@@ -1,5 +1,6 @@
 import firebase
 import libtorrent as lt
+import requests
 import time
 import sys
 import os
@@ -30,8 +31,10 @@ class Sump():
     def watch(self):
         while(1):
             if self.downloading():
-                sys.stdout.write('\r%s' % ', '.join(self.downloading()))
-                sys.stdout.flush()
+		os.system('cls')
+                print ('%s' % ',\n\r '.join(self.downloading()))
+                #sys.stdout.write('\r%s' % ',\n\r '.join(self.downloading()))
+                #sys.stdout.flush()
             time.sleep(2)
             self.set_data()
             self.add_torrents(self.unstarted)
@@ -94,6 +97,8 @@ class Sump():
     def start_download(self, key):
         entry = self.data[key]
         url = entry['link']
+	print 'adding {}'.format(url)
+	print ''
         info_hash = self.add_torrent(url, entry['type'])
         updated = self.db.update(key, '{"started":true, "hash":"%s"}' % info_hash)
         if updated:
