@@ -1,13 +1,11 @@
 import firebase
 import libtorrent as lt
-import requests
 import time
-import sys
 import os
-from utility import move_file, get_all_files, move_all_files, hashify, create_dirs
+from utility import move_file, move_all_files, hashify, create_dirs
 from settings import BASE_URL, SAVE_PATH, DIRS, FINAL_DIRS
 
-#TODO move url, file paths into separate file
+# TODO move url, file paths into separate file
 
 
 class Sump():
@@ -51,7 +49,7 @@ class Sump():
 
     def downloading(self):
         torrents = self.session.get_torrents()
-        return ['%s (%.2f%%)' % (t.name(), t.status().progress*100) 
+        return ['%s (%.2f%%)' % (t.name(), t.status().progress*100)
                 for t in torrents if not t.is_finished()]
 
     def downloaded(self):
@@ -64,7 +62,7 @@ class Sump():
         session.start_dht()
         session.listen_on(6881, 6891)
         self.session = session
-        
+
     def get_undownloaded(self):
         data = self.data
         undownloaded = {}
@@ -85,13 +83,16 @@ class Sump():
         for key in torrents:
             self.start_download(key)
 
-    def add_torrent(self, magnet_url, torrent_type):
-        #handle = lt.add_magnet_uri(self.session, magnet_url, self.params)
-        params = self.params
-        params['url'] = magnet_url
-        handle = self.session.add_torrent(params)
-        while (not handle.has_metadata()):
-            time.sleep(1)
+    def add_torrent(self, url, torrent_type):
+        if url.startswith('magnet:?'):
+            handle = lt.add_magnet_uri(self.session, url, self.params)
+        else:
+            params = self.params
+            params['url'] = url
+            handle = self.session.add_torrent(params)
+            while (not handle.has_metadata()):
+                time.sleep(1)
+
         return hashify(handle.info_hash().to_string())
 
     def start_download(self, key):
@@ -146,10 +147,10 @@ class Sump():
         move_file(original_path, new_path)
 
     def key_from_hash(self, info_hash):
-        return [k for k in self.data 
-                if self.data[k]['hash']==info_hash][0]
+        return [k for k in self.data
+                if self.data[k]['hash'] == info_hash][0]
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     s = Sump()
     s.watch()
