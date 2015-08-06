@@ -32,7 +32,7 @@ class Sump():
         while(1):
             if self.downloading():
 		os.system('cls')
-                print ('%s' % ',\n\r '.join(self.downloading()))
+                print ('%s' % '\n\r'.join(self.downloading()))
                 #sys.stdout.write('\r%s' % ',\n\r '.join(self.downloading()))
                 #sys.stdout.flush()
             time.sleep(2)
@@ -51,7 +51,7 @@ class Sump():
 
     def downloading(self):
         torrents = self.session.get_torrents()
-        return ['%s (%f%%)' % (t.name(), t.status().progress*100) 
+        return ['%s (%.2f%%)' % (t.name(), t.status().progress*100) 
                 for t in torrents if not t.is_finished()]
 
     def downloaded(self):
