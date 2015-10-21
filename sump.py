@@ -21,7 +21,7 @@ class Sump():
                 'storage_mode': lt.storage_mode_t(2),
                 'paused': False,
                 'auto_managed': True,
-                'duplicate_is_error': True
+                'duplicate_is_error': False
                 }
         create_dirs(DIRS.values() + FINAL_DIRS.values())
         self.add_torrents(self.undownloaded)
