@@ -90,8 +90,8 @@ class Sump():
             params = self.params
             params['url'] = url
             handle = self.session.add_torrent(params)
-            while (not handle.has_metadata()):
-                time.sleep(1)
+            #while (not handle.has_metadata()):
+                #time.sleep(1)
 
         return hashify(handle.info_hash().to_string())
 
