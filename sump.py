@@ -21,7 +21,7 @@ class Sump():
                 'storage_mode': lt.storage_mode_t(2),
                 'paused': False,
                 'auto_managed': True,
-                'duplicate_is_error': False
+                'duplicate_is_error': True
                 }
         create_dirs(DIRS.values() + FINAL_DIRS.values())
         self.add_torrents(self.undownloaded)
@@ -90,8 +90,8 @@ class Sump():
             params = self.params
             params['url'] = url
             handle = self.session.add_torrent(params)
-            #while (not handle.has_metadata()):
-                #time.sleep(1)
+            while (not handle.has_metadata()):
+                time.sleep(1)
 
         return hashify(handle.info_hash().to_string())
 
